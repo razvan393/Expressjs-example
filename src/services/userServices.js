@@ -4,4 +4,19 @@ const getAll = async () => {
   return datastore;
 };
 
-export default { getAll };
+const getUser = async (id) => {
+  return datastore.filter((user) => user.id === id);
+};
+
+const deleteUser = async (id) => {
+  console.log(datastore.filter((user) => user.id === id))
+  const index = datastore.indexOf(datastore.filter((user) => user.id === id)[0]);
+  if (index !== -1) {
+    datastore.splice(index, 1);
+    return "User deleted";
+  } else {
+    return "User not found";
+  }
+};
+
+export default { getAll, getUser, deleteUser };
