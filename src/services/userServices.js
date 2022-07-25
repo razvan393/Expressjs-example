@@ -9,7 +9,6 @@ const getUser = async (id) => {
 };
 
 const deleteUser = async (id) => {
-  console.log(datastore.filter((user) => user.id === id))
   const index = datastore.indexOf(datastore.filter((user) => user.id === id)[0]);
   if (index !== -1) {
     datastore.splice(index, 1);
