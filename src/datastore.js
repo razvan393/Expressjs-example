@@ -7,14 +7,14 @@ const datastore = [
     age: 30,
   },
   {
-    id: 1,
+    id: 2,
     name: "Cristi",
     location: "Bucharest",
     position: "Architect",
     age: 25,
   },
   {
-    id: 1,
+    id: 3,
     name: "Stefan",
     location: "Bucharest",
     position: "Manager",
