@@ -48,6 +48,33 @@ const addUser = async (req, res, next) => {
   }
 };
 
+const updateUser = async (req, res, next) => {
+  try {
+    if (!req?.params?.id) {
+      throw "No parameter provided";
+    }
+
+    const id = parseInt(req.params.id)
+    const user = await userServices.getUser(id);
+
+    if (!user) {
+      throw "User not found";
+    }
+
+    const response = await userServices.updateUser(id, {
+      name: req?.body?.name || user.name,
+      location: req?.body?.location || user.location,
+      position: req?.body?.position || user.position,
+      age: req?.body?.age || user.age,
+    });
+
+    res.json(response);
+  } catch (err) {
+    console.error(`Error while updating user`);
+    next(err);
+  }
+};
+
 const deleteUser = async (req, res, next) => {
   try {
     if (!req?.params?.id) {
@@ -62,4 +89,4 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-export default { getUsers, getUser, deleteUser, addUser };
+export default { getUsers, getUser, deleteUser, addUser, updateUser };

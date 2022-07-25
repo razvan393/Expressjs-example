@@ -4,12 +4,16 @@ const filterById = (id) => {
   return datastore.filter((user) => user.id === id);
 };
 
+const indexOfUser = (id) => {
+  return datastore.indexOf(filterById(id)[0]);
+};
+
 const getAll = async () => {
   return datastore;
 };
 
 const getUser = async (id) => {
-  return filterById(id);
+  return filterById(id)[0];
 };
 
 const addUser = async (userInfo) => {
@@ -23,8 +27,19 @@ const addUser = async (userInfo) => {
   return datastore;
 };
 
+const updateUser = async (id, userInfo) => {
+  const index = indexOfUser(id);
+
+  if (index !== -1) {
+    datastore[index] = { id: datastore[index].id, ...userInfo };
+    return datastore;
+  } else {
+    return "User not found";
+  }
+};
+
 const deleteUser = async (id) => {
-  const index = datastore.indexOf(filterById(id)[0]);
+  const index = indexOfUser(id);
   if (index !== -1) {
     datastore.splice(index, 1);
     return "User deleted";
@@ -33,4 +48,4 @@ const deleteUser = async (id) => {
   }
 };
 
-export default { getAll, getUser, deleteUser, addUser };
+export default { getAll, getUser, deleteUser, addUser, updateUser };
