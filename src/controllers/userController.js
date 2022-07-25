@@ -12,13 +12,13 @@ const getUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     if (!req?.params?.id) {
-      throw "No parameter provided";
+      throw { message: "No parameter provided" };
     }
 
     const response = await userServices.getUser(parseInt(req.params.id));
 
-    if (response?.length === 0) {
-      throw "No user found";
+    if (!response) {
+      throw { message: "No user found" };
     }
 
     res.json(response);
@@ -31,7 +31,7 @@ const getUser = async (req, res, next) => {
 const addUser = async (req, res, next) => {
   try {
     if (!req?.body?.name) {
-      throw "No name provided";
+      throw { message: "No name provided" };
     }
 
     const response = await userServices.addUser({
@@ -51,14 +51,14 @@ const addUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     if (!req?.params?.id) {
-      throw "No parameter provided";
+      throw { message: "No parameter provided" };
     }
 
-    const id = parseInt(req.params.id)
+    const id = parseInt(req.params.id);
     const user = await userServices.getUser(id);
 
     if (!user) {
-      throw "User not found";
+      throw { message: "User not found" };
     }
 
     const response = await userServices.updateUser(id, {
@@ -78,7 +78,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     if (!req?.params?.id) {
-      throw "No parameter provided";
+      throw { message: "No parameter provided" };
     }
 
     const response = await userServices.deleteUser(parseInt(req.params.id));

@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import errorsMiddleware from "./src/middleware/middleware.js";
 import usersRouter from "./src/routes/userRoutes.js";
 
 dotenv.config();
@@ -12,6 +13,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", usersRouter);
+
+app.use(errorsMiddleware);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`);
