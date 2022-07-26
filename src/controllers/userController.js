@@ -28,6 +28,15 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getUser2 = async (req, res, next) => {
+  try {
+    res.json({"message": "second get"})
+  } catch (err) {
+    console.error(`Error while getting user 2`);
+    next(err);
+  }
+}
+
 const addUser = async (req, res, next) => {
   try {
     if (!req?.body?.name) {
@@ -38,7 +47,7 @@ const addUser = async (req, res, next) => {
       name: req.body.name,
       location: req?.body?.location || "",
       position: req?.body?.position || "",
-      age: req?.body?.age || "",
+      age: parseInt(req?.body?.age) || "",
     });
 
     res.json(response);
@@ -65,13 +74,32 @@ const updateUser = async (req, res, next) => {
       name: req?.body?.name || user.name,
       location: req?.body?.location || user.location,
       position: req?.body?.position || user.position,
-      age: req?.body?.age || user.age,
+      age: parseInt(req?.body?.age) || user.age,
     });
 
     res.json(response);
   } catch (err) {
     console.error(`Error while updating user`);
     next(err);
+  }
+};
+
+const updateUser2 = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const user = await userServices.getUser(id);
+
+    const response = await userServices.updateUser(id, {
+      name: req?.body?.name,
+      location: req?.body?.location,
+      position: req?.body?.position,
+      age: parseInt(req?.body?.age),
+    });
+
+    res.json({ message: "Update2" });
+  } catch (err) {
+    console.log('Error for second update')
+    next(err)
   }
 };
 
@@ -89,4 +117,4 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-export default { getUsers, getUser, deleteUser, addUser, updateUser };
+export default { getUsers, getUser, getUser2, deleteUser, addUser, updateUser, updateUser2 };
