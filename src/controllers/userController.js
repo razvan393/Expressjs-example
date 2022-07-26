@@ -28,14 +28,23 @@ const getUser = async (req, res, next) => {
   }
 };
 
-const getUser2 = async (req, res, next) => {
+const fakeGetUser = async (req, res, next) => {
   try {
-    res.json({"message": "second get"})
+    res.json({ message: "I am not what you expect" });
   } catch (err) {
-    console.error(`Error while getting user 2`);
+    console.error(`Error while getting user`);
     next(err);
   }
-}
+};
+
+const fakeGetUser2 = async (req, res, next) => {
+  try {
+    res.json({ message: "second" });
+  } catch (err) {
+    console.error(`Error while getting user`);
+    next(err);
+  }
+};
 
 const addUser = async (req, res, next) => {
   try {
@@ -117,4 +126,4 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-export default { getUsers, getUser, getUser2, deleteUser, addUser, updateUser, updateUser2 };
+export default { getUsers, getUser, deleteUser, addUser, updateUser, updateUser2, fakeGetUser, fakeGetUser2 };
